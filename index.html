@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -162,51 +163,7 @@
     </main>
   </div>
 
-  <script>
-    // Tab logic (no frameworks)
-    const tabs = document.querySelectorAll('.tab');
-    const panels = {
-      projects: document.getElementById('panel-projects'),
-      blog: document.getElementById('panel-blog'),
-      osc: document.getElementById('panel-osc'),
-      contact: document.getElementById('panel-contact'),
-    };
+<script src="main.js" defer></script>
 
-    function show(target) {
-      // toggle active tab
-      tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.target === target)));
-      // toggle panels
-      Object.entries(panels).forEach(([key, el]) => {
-        el.classList.toggle('active', key === target);
-      });
-      // update hash for deep‑linking
-      const hash = `#${target}`;
-      if (location.hash !== hash) history.replaceState(null, '', hash);
-    }
-
-    tabs.forEach(tab => tab.addEventListener('click', () => show(tab.dataset.target)));
-
-    // Deep‑link support: /#blog etc.
-    const initial = (location.hash || '#projects').replace('#','');
-    if (panels[initial]) show(initial);
-
-    // Fake contact form submit (no backend)
-    const form = document.getElementById('contact-form');
-    const statusEl = document.getElementById('form-status');
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
-      // rudimentary validation
-      if (!data.name || !data.email || !data.message) {
-        statusEl.textContent = 'Please complete all fields.';
-        return;
-      }
-      statusEl.textContent = 'Thanks! This demo didn\'t actually send — connect to a backend or a form service.';
-      form.reset();
-    });
-
-    // Year stamp
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
